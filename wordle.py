@@ -15,26 +15,40 @@ def play():
     for i in wordToGuess:
         toGuessList.append(i)
     row = 1
-    board = [f'+---+---+---+---+---+',
-             f'|   |   |   |   |   |',
-             f'+---+---+---+---+---+',
-             f'|   |   |   |   |   |',
-             f'+---+---+---+---+---+',
-             f'|   |   |   |   |   |',
-             f'+---+---+---+---+---+',
-             f'|   |   |   |   |   |',
-             f'+---+---+---+---+---+',
-             f'|   |   |   |   |   |',
-             f'+---+---+---+---+---+',
-             f'|   |   |   |   |   |',
-             f'+---+---+---+---+---+ \n']
-    while row < 11:
+    board = [f'{"+---+---+---+---+---+":>30}',
+             f'{"|   |   |   |   |   |":>30}',
+             f'{"+---+---+---+---+---+":>30}',
+             f'{"|   |   |   |   |   |":>30}',
+             f'{"+---+---+---+---+---+":>30}',
+             f'{"|   |   |   |   |   |":>30}',
+             f'{"+---+---+---+---+---+":>30}',
+             f'{"|   |   |   |   |   |":>30}',
+             f'{"+---+---+---+---+---+":>30}',
+             f'{"|   |   |   |   |   |":>30}',
+             f'{"+---+---+---+---+---+":>30}',
+             f'{"|   |   |   |   |   |":>30}',
+             f'{"+---+---+---+---+---+":>30} \n']
+    keys = [f'+---+---+---+---+---+---+---+---+---+---+',
+            f'| Q | W | E | R | T | Y | U | I | O | P |',
+            f'+---+---+---+---+---+---+---+---+---+---+',
+            f'  +---+---+---+---+---+---+---+---+---+',
+            f'  | A | S | D | F | G | H | J | K | L |',
+            f'  +---+---+---+---+---+---+---+---+---+',
+            f'     +---+---+---+---+---+---+---+',
+            f'     | Z | X | C | V | B | N | M |',
+            f'     +---+---+---+---+---+---+---+ \n']
+    keyboard = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+                ['Z', 'X', 'C', 'V', 'B', 'N', 'M']]
+    while row < 13:
         green = []
         yellow = []
         check = []
         wordDisplay = [' ', ' ', ' ', ' ', ' ']
         for line in board:
             print(line)
+        for a in keys:
+            print(a)
         wordGuess = input("Your word guess: ")
         if wordGuess.isalpha():
             if wordGuess == "quit":
@@ -45,6 +59,8 @@ def play():
                     continue
                 else:
                     for num in range(5):
+                        format = 0
+                        count = 1
                         check.append(wordGuess[num])
                         if wordGuess[num] == wordToGuess[num]:
                             green.append(wordGuess[num])
@@ -52,6 +68,7 @@ def play():
                             if wordGuess[num] in yellow:
                                 if check.count(wordGuess[num]) > toGuessList.count(wordGuess[num]):
                                     wordDisplay[wordDisplay.index(f' {wordGuess[num]}*')] = f' {wordGuess[num]} '
+                                    yellow.remove(wordGuess[num])
                         elif wordGuess[num] in wordToGuess:
                             if toGuessList.count(wordGuess[num]) > 1:
                                 if check.count(wordGuess[num]) > toGuessList.count(wordGuess[num]):
@@ -66,7 +83,26 @@ def play():
                                 wordDisplay[num] = f' {wordGuess[num]} ' 
                         else:
                             wordDisplay[num] = f' {wordGuess[num]} '
-                    board[row] = f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}|'
+                        for b in range(3):
+                            if wordGuess[num].upper() in keyboard[b]:
+                                if wordGuess[num] in green:
+                                    keyboard[b][keyboard[b].index(wordGuess[num].upper())] = f'*{wordGuess[num].upper()}*'
+                                elif wordGuess[num] in yellow:
+                                    keyboard[b][keyboard[b].index(wordGuess[num].upper())] = f' {wordGuess[num].upper()}*'
+                                else:
+                                    keyboard[b][keyboard[b].index(wordGuess[num].upper())] = ' '
+                                str = f'{"|":>{format}}'
+                                for c in keyboard[b]:
+                                    if "*" not in c:
+                                        str += f' {c} |'
+                                    else:
+                                        str += f'{c}|'
+                                keys[count] = str
+                                break
+                            else:
+                                format += 3
+                                count += 3
+                    board[row] = f'{"|":>10}{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}|'
                     row += 2
                     if wordGuess == wordToGuess:
                         print(f'Congrats! You guessed the word: {wordToGuess} \n \n')

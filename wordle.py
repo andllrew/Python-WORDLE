@@ -35,7 +35,7 @@ def play():
             if wordGuess == "quit":
                 break
             elif len(wordGuess) == 5: 
-                if wordGuess not in wordList:
+                if wordGuess not in guessList:
                     print(f'"{wordGuess}" is not in the word list. \n')
                     continue
                 else:
@@ -154,6 +154,7 @@ def stats(stat):
 if __name__ == "__main__":
     wins = 0
     wordList = open("c:/Users/Andrew Nguyen/Downloads/git/website-repo/words.txt").read().splitlines()
+    guessList = open("c:/Users/Andrew Nguyen/Downloads/git/website-repo/guess.txt").read().splitlines()
     while True:
         print(f'Welcome to the Python Wordle Game! \n \n' +
         f'{"1. Play the game":>22} \n' +

@@ -1,5 +1,6 @@
 from contextlib import nullcontext
 import random
+from tkinter import N
 
 def valid():
     while True:
@@ -12,6 +13,7 @@ def valid():
 def play():
     randomNum = random.randint(0, len(wordList))
     wordToGuess = wordList[randomNum]
+    print(wordToGuess)
     wordDisplay = []
     guess = 1
     print(f'+---+---+---+---+---+ \n' +
@@ -42,17 +44,14 @@ def play():
                     for num in range(5):
                         if wordGuess[num] == wordToGuess[num]:
                             green.append(wordGuess[num])
-                    for letter in wordGuess:
-                        if letter in wordToGuess:
-                            if letter not in green:
-                                yellow.append(letter)
-                    for letter in wordGuess:
-                        if letter in green:
-                            wordDisplay.append(f'*{letter}*')
-                        elif letter in yellow:
-                            wordDisplay.append(f' {letter}*')
-                        else:
-                            wordDisplay.append(f' {letter} ')
+                            wordDisplay.append(f'*{wordGuess[num]}*')
+                        elif wordGuess[num] not in green:
+                            if wordGuess[num] in wordToGuess:
+                                yellow.append(wordGuess[num])
+                                wordDisplay.append(f' {wordGuess[num]}*')
+                            else:
+                                wordDisplay.append(f' {wordGuess[num]} ')
+                    print(wordDisplay)
                     if guess == 1:
                         newDisplay = (f'+---+---+---+---+---+ \n' +
                                     f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}| \n' +
@@ -153,8 +152,8 @@ def stats(stat):
 
 if __name__ == "__main__":
     wins = 0
-    wordList = open("c:/Users/Andrew Nguyen/Downloads/git/website-repo/words.txt").read().splitlines()
-    guessList = open("c:/Users/Andrew Nguyen/Downloads/git/website-repo/guess.txt").read().splitlines()
+    wordList = open("c:/Users/Andrew Nguyen/Downloads/git/Python-WORDLE/words.txt").read().splitlines()
+    guessList = open("c:/Users/Andrew Nguyen/Downloads/git/Python-WORDLE/guess.txt").read().splitlines()
     while True:
         print(f'Welcome to the Python Wordle Game! \n \n' +
         f'{"1. Play the game":>22} \n' +

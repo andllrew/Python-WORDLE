@@ -13,25 +13,29 @@ def valid():
 def play():
     randomNum = random.randint(0, len(wordList))
     wordToGuess = wordList[randomNum]
-    print(wordToGuess)
-    wordDisplay = []
-    guess = 1
-    print(f'+---+---+---+---+---+ \n' +
-        f'|   |   |   |   |   | \n' +
-        f'+---+---+---+---+---+ \n' +
-        f'|   |   |   |   |   | \n' +
-        f'+---+---+---+---+---+ \n' +
-        f'|   |   |   |   |   | \n' +
-        f'+---+---+---+---+---+ \n' +
-        f'|   |   |   |   |   | \n' +
-        f'+---+---+---+---+---+ \n' +
-        f'|   |   |   |   |   | \n' +
-        f'+---+---+---+---+---+ \n' +
-        f'|   |   |   |   |   | \n' +
-        f'+---+---+---+---+---+ \n')
-    while guess < 6:
-        green = []
-        yellow = []
+    toGuessList = []
+    for i in wordToGuess:
+        toGuessList.append(i)
+    print(toGuessList)
+    row = 1
+    board = [f'+---+---+---+---+---+',
+             f'|   |   |   |   |   |',
+             f'+---+---+---+---+---+',
+             f'|   |   |   |   |   |',
+             f'+---+---+---+---+---+',
+             f'|   |   |   |   |   |',
+             f'+---+---+---+---+---+',
+             f'|   |   |   |   |   |',
+             f'+---+---+---+---+---+',
+             f'|   |   |   |   |   |',
+             f'+---+---+---+---+---+',
+             f'|   |   |   |   |   |',
+             f'+---+---+---+---+---+ \n']
+    while row < 11:
+        for line in board:
+            print(line)
+        wordDisplay = [' ', ' ', ' ', ' ', ' ']
+        check = []
         wordGuess = input("Your word guess: ")
         if wordGuess.isalpha():
             if wordGuess == "quit":
@@ -42,105 +46,26 @@ def play():
                     continue
                 else:
                     for num in range(5):
+                        check.append(wordGuess[num])
                         if wordGuess[num] == wordToGuess[num]:
-                            green.append(wordGuess[num])
-                            wordDisplay.append(f'*{wordGuess[num]}*')
-                        elif wordGuess[num] not in green:
-                            if wordGuess[num] in wordToGuess:
-                                yellow.append(wordGuess[num])
-                                wordDisplay.append(f' {wordGuess[num]}*')
+                            wordDisplay[num] = f'*{wordGuess[num]}*'
+                        elif wordGuess[num] in wordToGuess:
+                            if toGuessList.count(wordGuess[num]) > 1:
+                                if check.count(wordGuess[num]) > toGuessList.count(wordGuess[num]):
+                                    wordDisplay[num] = f' {wordGuess[num]} '
+                                else:
+                                    wordDisplay[num] = f' {wordGuess[num]}*'
+                            elif check.count(wordGuess[num]) < 2:
+                                wordDisplay[num] = f' {wordGuess[num]}*'
                             else:
-                                wordDisplay.append(f' {wordGuess[num]} ')
-                    print(wordDisplay)
-                    if guess == 1:
-                        newDisplay = (f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n')
-                    elif guess == 2:
-                        newDisplay = (f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[5]}|{wordDisplay[6]}|{wordDisplay[7]}|{wordDisplay[8]}|{wordDisplay[9]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n')
-                    elif guess == 3:
-                        newDisplay = (f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[5]}|{wordDisplay[6]}|{wordDisplay[7]}|{wordDisplay[8]}|{wordDisplay[9]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[10]}|{wordDisplay[11]}|{wordDisplay[12]}|{wordDisplay[13]}|{wordDisplay[14]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n')
-                    elif guess == 4:
-                        newDisplay = (f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[5]}|{wordDisplay[6]}|{wordDisplay[7]}|{wordDisplay[8]}|{wordDisplay[9]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[10]}|{wordDisplay[11]}|{wordDisplay[12]}|{wordDisplay[13]}|{wordDisplay[14]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[15]}|{wordDisplay[16]}|{wordDisplay[17]}|{wordDisplay[18]}|{wordDisplay[19]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n')
-                    elif guess == 5:
-                        newDisplay = (f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[5]}|{wordDisplay[6]}|{wordDisplay[7]}|{wordDisplay[8]}|{wordDisplay[9]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[10]}|{wordDisplay[11]}|{wordDisplay[12]}|{wordDisplay[13]}|{wordDisplay[14]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[15]}|{wordDisplay[16]}|{wordDisplay[17]}|{wordDisplay[18]}|{wordDisplay[19]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[20]}|{wordDisplay[21]}|{wordDisplay[22]}|{wordDisplay[23]}|{wordDisplay[24]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|   |   |   |   |   | \n' +
-                                    f'+---+---+---+---+---+ \n')
-                    elif guess == 6:
-                        newDisplay = (f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[5]}|{wordDisplay[6]}|{wordDisplay[7]}|{wordDisplay[8]}|{wordDisplay[9]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[10]}|{wordDisplay[11]}|{wordDisplay[12]}|{wordDisplay[13]}|{wordDisplay[14]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[15]}|{wordDisplay[16]}|{wordDisplay[17]}|{wordDisplay[18]}|{wordDisplay[19]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[20]}|{wordDisplay[21]}|{wordDisplay[22]}|{wordDisplay[23]}|{wordDisplay[24]}| \n' +
-                                    f'+---+---+---+---+---+ \n' +
-                                    f'|{wordDisplay[25]}|{wordDisplay[26]}|{wordDisplay[27]}|{wordDisplay[28]}|{wordDisplay[29]}| \n' +
-                                    f'+---+---+---+---+---+ \n')
-                    print(newDisplay)
+                                wordDisplay[num] = f' {wordGuess[num]} ' 
+                        else:
+                            wordDisplay[num] = f' {wordGuess[num]} '
+                    board[row] = f'|{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}|'
+                    row += 2
                     if wordGuess == wordToGuess:
                         print(f'Congrats! You guessed the word: {wordToGuess} \n \n')
                         return True
-                    guess += 1
             else:
                 print(f'"{wordGuess}" is not five characters. \n')
         else:

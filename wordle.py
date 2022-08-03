@@ -1,7 +1,4 @@
-from contextlib import nullcontext
-from fileinput import hook_compressed
 import random
-from tkinter import N
 
 def valid():
     while True:

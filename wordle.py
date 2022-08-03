@@ -1,4 +1,5 @@
 from contextlib import nullcontext
+from fileinput import hook_compressed
 import random
 from tkinter import N
 
@@ -16,7 +17,6 @@ def play():
     toGuessList = []
     for i in wordToGuess:
         toGuessList.append(i)
-    print(toGuessList)
     row = 1
     board = [f'+---+---+---+---+---+',
              f'|   |   |   |   |   |',
@@ -32,10 +32,12 @@ def play():
              f'|   |   |   |   |   |',
              f'+---+---+---+---+---+ \n']
     while row < 11:
+        green = []
+        yellow = []
+        check = []
+        wordDisplay = [' ', ' ', ' ', ' ', ' ']
         for line in board:
             print(line)
-        wordDisplay = [' ', ' ', ' ', ' ', ' ']
-        check = []
         wordGuess = input("Your word guess: ")
         if wordGuess.isalpha():
             if wordGuess == "quit":
@@ -48,14 +50,20 @@ def play():
                     for num in range(5):
                         check.append(wordGuess[num])
                         if wordGuess[num] == wordToGuess[num]:
+                            green.append(wordGuess[num])
                             wordDisplay[num] = f'*{wordGuess[num]}*'
+                            if wordGuess[num] in yellow:
+                                if check.count(wordGuess[num]) > toGuessList.count(wordGuess[num]):
+                                    wordDisplay[wordDisplay.index(f' {wordGuess[num]}*')] = f' {wordGuess[num]} '
                         elif wordGuess[num] in wordToGuess:
                             if toGuessList.count(wordGuess[num]) > 1:
                                 if check.count(wordGuess[num]) > toGuessList.count(wordGuess[num]):
                                     wordDisplay[num] = f' {wordGuess[num]} '
                                 else:
+                                    yellow.append(wordGuess[num])
                                     wordDisplay[num] = f' {wordGuess[num]}*'
                             elif check.count(wordGuess[num]) < 2:
+                                yellow.append(wordGuess[num])
                                 wordDisplay[num] = f' {wordGuess[num]}*'
                             else:
                                 wordDisplay[num] = f' {wordGuess[num]} ' 

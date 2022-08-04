@@ -122,13 +122,10 @@ def play():
         print(a)
     print(f'The correct word was: {wordToGuess} \n')
 
-def stats(stat):
-    print(f'The number of games you won: {stat} \n \n')
-
 if __name__ == "__main__":
     wins = 0
-    wordList = open("c:/Users/Andrew Nguyen/Downloads/git/Python-WORDLE/words.txt").read().splitlines()
-    guessList = open("c:/Users/Andrew Nguyen/Downloads/git/Python-WORDLE/guess.txt").read().splitlines()
+    wordList = open("./Python-WORDLE/words.txt").read().splitlines()
+    guessList = open("./Python-WORDLE/guess.txt").read().splitlines()
     while True:
         print(f'Welcome to the Python Wordle Game! \n \n' +
         f'{"1. Play the game":>22} \n' +
@@ -140,7 +137,7 @@ if __name__ == "__main__":
             if result == True:
                 wins += 1
         if userInput == 2:
-            stats(wins)
+            print(f'The number of games you won: {wins} \n \n')
         if userInput == 3:
             print("Thank you for playing! Goodbye!")
             exit()

@@ -84,27 +84,32 @@ def play():
                         else:
                             wordDisplay[num] = f' {wordGuess[num]} '
                         for b in range(3):
-                            if wordGuess[num].upper() in keyboard[b]:
-                                if wordGuess[num] in green:
-                                    keyboard[b][keyboard[b].index(wordGuess[num].upper())] = f'*{wordGuess[num].upper()}*'
-                                elif wordGuess[num] in yellow:
-                                    keyboard[b][keyboard[b].index(wordGuess[num].upper())] = f' {wordGuess[num].upper()}*'
-                                else:
-                                    keyboard[b][keyboard[b].index(wordGuess[num].upper())] = ' '
-                                str = f'{"|":>{format}}'
-                                for c in keyboard[b]:
-                                    if "*" not in c:
-                                        str += f' {c} |'
+                            str = f'{"|":>{format}}'
+                            for c in keyboard[b]:
+                                if wordGuess[num].upper() == c.replace(' ', '').replace('*', ''):
+                                    if wordGuess[num] in green:
+                                        keyboard[b][keyboard[b].index(c)] = f'*{wordGuess[num].upper()}*'
+                                        c = f'*{wordGuess[num].upper()}*'
+                                    elif wordGuess[num] in yellow:
+                                        keyboard[b][keyboard[b].index(c)] = f' {wordGuess[num].upper()}*'
+                                        c = f' {wordGuess[num].upper()}*'
                                     else:
-                                        str += f'{c}|'
-                                keys[count] = str
-                                break
-                            else:
-                                format += 3
-                                count += 3
+                                        keyboard[b][keyboard[b].index(c)] = ' '
+                                        c = ' '
+                                if "*" not in c:
+                                    str += f' {c} |' 
+                                else:
+                                    str += f'{c}|'
+                            keys[count] = str
+                            format += 3
+                            count += 3
                     board[row] = f'{"|":>10}{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}|'
                     row += 2
                     if wordGuess == wordToGuess:
+                        for line in board:
+                            print(line)
+                        for a in keys:
+                            print(a)
                         print(f'Congrats! You guessed the word: {wordToGuess} \n \n')
                         return True
             else:

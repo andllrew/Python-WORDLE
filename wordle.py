@@ -116,6 +116,10 @@ def play():
                 print(f'"{wordGuess}" is not five characters. \n')
         else:
             print(f'"{wordGuess}" is not a valid word. Try again. \n')
+    for line in board:
+        print(line)
+    for a in keys:
+        print(a)
     print(f'The correct word was: {wordToGuess} \n')
 
 def stats(stat):

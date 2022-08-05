@@ -104,14 +104,14 @@ def play():
                             format += 3
                             count += 3
                     board[row] = f'{"|":>10}{wordDisplay[0]}|{wordDisplay[1]}|{wordDisplay[2]}|{wordDisplay[3]}|{wordDisplay[4]}|'
-                    row += 2
                     if wordGuess == wordToGuess:
                         for line in board:
                             print(line)
                         for a in keys:
                             print(a)
                         print(f'Congrats! You guessed the word: {wordToGuess} \n \n')
-                        return True
+                        return row, True
+                    row += 2
             else:
                 print(f'"{wordGuess}" is not five characters. \n')
         else:
@@ -121,9 +121,29 @@ def play():
     for a in keys:
         print(a)
     print(f'The correct word was: {wordToGuess} \n')
+    return 0, False
+
+def stat(wins, board):
+    if wins == 1:
+        board["ONE"] += 1
+    if wins == 3:
+        board["TWO"] += 1
+    if wins == 5:
+        board["THREE"] += 1
+    if wins == 7:
+        board["FOUR"] += 1
+    if wins == 9:
+        board["FIVE"] += 1
+    if wins == 11:
+        board["SIX"] += 1
 
 if __name__ == "__main__":
-    wins = 0
+    scores = {"ONE": 0,
+              "TWO": 0,
+              "THREE": 0,
+              "FOUR": 0,
+              "FIVE": 0,
+              "SIX": 0}
     wordList = open("./Python-WORDLE/words.txt").read().splitlines()
     guessList = open("./Python-WORDLE/guess.txt").read().splitlines()
     while True:
@@ -133,11 +153,36 @@ if __name__ == "__main__":
         f'{"3. Exit":>13}')
         userInput = valid()
         if userInput == 1:
-            result = play()
-            if result == True:
-                wins += 1
+            result, check = play()
+            if check == True:
+                stat(result, scores)
         if userInput == 2:
-            print(f'The number of games you won: {wins} \n \n')
+            index = 0
+            statIndex = 1
+            str = [f'{"+":>9}-------+---+',
+                   f'{"| ":>10}{list(scores.keys())[0]}   |',
+                   f'{"+":>9}-------+---+',
+                   f'{"| ":>10}{list(scores.keys())[1]}   |',
+                   f'{"+":>9}-------+---+',
+                   f'{"| ":>10}{list(scores.keys())[2]} |',
+                   f'{"+":>9}-------+---+',
+                   f'{"| ":>10}{list(scores.keys())[3]}  |',
+                   f'{"+":>9}-------+---+',
+                   f'{"| ":>10}{list(scores.keys())[4]}  |',
+                   f'{"+":>9}-------+---+',
+                   f'{"| ":>10}{list(scores.keys())[5]}   |',
+                   f'{"+":>9}-------+---+ \n',]
+            for point in scores:
+                if scores[point] < 10:
+                    str[statIndex] += f' {scores[list(scores.keys())[index]]} |'
+                if 9 < scores[point] < 100:
+                    str[statIndex] += f'{scores[list(scores.keys())[index]]} |'
+                if 99 < scores[point] < 1000:
+                    str[statIndex] += f'{scores[list(scores.keys())[index]]}|'
+                index += 1
+                statIndex += 2
+            for lines in str:
+                print(lines)
         if userInput == 3:
             print("Thank you for playing! Goodbye!")
             exit()
